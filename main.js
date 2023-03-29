@@ -24,69 +24,118 @@ Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e inc
  3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
 */
 
-/ ! OPERAZIONI PRELIMINARI
+// ! OPERAZIONI PRELIMINARI
 // Prendo gli elementi dal DOM
 const container = document.getElementById('container');
 
-
-
-
-
-
+// ! SVOLGIMENTO
+// Creo un array di oggetti
 const posts = [
     {
-        "id": 1,
-        "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/300?image=171",
-        "author": {
-            "name": "Phil Mangione",
-            "image": "https://unsplash.it/300/300?image=15"
-        },
-        "likes": 80,
-        "created": "2021-06-25"
-    },
-    {
-        "id": 2,
-        "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=112",
-        "author": {
-            "name": "Sofia Perlari",
-            "image": "https://unsplash.it/300/300?image=10"
-        },
-        "likes": 120,
-        "created": "2021-09-03"
-    },
-    {
-        "id": 3,
-        "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=234",
-        "author": {
-            "name": "Chiara Passaro",
-            "image": "https://unsplash.it/300/300?image=20"
-        },
-        "likes": 78,
-        "created": "2021-05-15"
-    },
-    {
-        "id": 4,
-        "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=24",
-        "author": {
-            "name": "Luca Formicola",
-            "image": null
-        },
-        "likes": 56,
-        "created": "2021-04-03"
-    },
-    {
-        "id": 5,
-        "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        "media": "https://unsplash.it/600/400?image=534",
-        "author": {
-            "name": "Alessandro Sainato",
-            "image": "https://unsplash.it/300/300?image=29"
-        },
-        "likes": 95,
-        "created": "2021-03-05"
+      id: 1,
+      nomeAutore: 'Napoleone Bonaparte',
+      fotoAutore: 'img/gioconda.jpg',
+      data: new Date('12-22-2022'), 
+      testo: 'Per essere dei grandi leader è necessario diventare studiosi del successo e il miglior modo che conosco è quello di conoscere la storia e la biografia degli uomini che già hanno avuto successo. Così la loro esperienza diventa la mia esperienza.',
+      immagine: 'img/cappella-sistina.jpg',
+      likes: '800',
+    }, {
+      id: 2,
+      nomeAutore: 'Leonardo Da Vinci',
+      fotoAutore: 'img/klimt.jpg',
+      data: new Date('12-15-2022'), 
+      testo: 'Per essere dei grandi leader è necessario diventare studiosi del successo e il miglior modo che conosco è quello di conoscere la storia e la biografia degli uomini che già hanno avuto successo. Così la loro esperienza diventa la mia esperienza.',
+      immagine: 'img/notte-stellata.jpg',
+      likes: '590',
+    }, {
+      id: 3,
+      nomeAutore: 'George Washington',
+      fotoAutore: 'img/urlo.jpg',
+      data: new Date('12-03-2022'), 
+      testo: 'Per essere dei grandi leader è necessario diventare studiosi del successo e il miglior modo che conosco è quello di conoscere la storia e la biografia degli uomini che già hanno avuto successo. Così la loro esperienza diventa la mia esperienza.',
+      immagine: 'img/parchetto-vintage.jpg',
+      likes: '222',
+    }, {
+      id: 4,
+      nomeAutore: 'Alessandro Magno',
+      fotoAutore: 'img/dalì.jpg',
+      data: new Date('11-20-2022'), 
+      testo: 'Per essere dei grandi leader è necessario diventare studiosi del successo e il miglior modo che conosco è quello di conoscere la storia e la biografia degli uomini che già hanno avuto successo. Così la loro esperienza diventa la mia esperienza.',
+      immagine: 'img/nascita-venere.jpg',
+      likes: '164',
+    }, {
+      id: 5,
+      nomeAutore: 'Adolf Hitler',
+      fotoAutore: 'img/goya.jpg',
+      data: new Date('07-12-2020'), 
+      testo: 'Per essere dei grandi leader è necessario diventare studiosi del successo e il miglior modo che conosco è quello di conoscere la storia e la biografia degli uomini che già hanno avuto successo. Così la loro esperienza diventa la mia esperienza.',
+      immagine: 'img/guernica.jpg',
+      likes: '13',
     }
-];
+  ];
+
+    
+// Stampare su console, per ogni post, le varie informazioni.
+let content = '';
+for (let post of posts){
+  // Inserisco contenuti nel DOM
+  content += `
+  <div class="post">
+  <div class="post__header">
+    <div class="post-meta">
+      <div class="post-meta__icon">
+        <img class="profile-pic" src="${post.fotoAutore}" alt="${post.nomeAutore}">
+      </div>
+      <div class="post-meta__data">
+        <div class="post-meta__author">${post.nomeAutore}</div>
+        <div class="post-meta__time">${post.data.toLocaleDateString()}</div>
+      </div>
+    </div>
+  </div>
+  <div class="post__text">
+  ${post.testo}
+  </div>
+  <div class="post__image">
+    <img src="${post.immagine}" alt="${post.nomeAutore}">
+  </div>
+  <div class="post__footer">
+    <div class="likes js-likes">
+      <div class="likes__cta">
+        <button class="like-button js-like-button" href="#" data-postid="${post.id}">
+          <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+          <span class="like-button__label">Mi Piace</span>
+        </button>
+      </div>
+      <div class="likes__counter">Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone</div>
+    </div>
+  </div>
+  </div>
+  `;
+}
+
+// Stampo in pagina
+container.innerHTML = content;
+
+
+// Variabile iniziale
+let isClicked = false;
+
+// Prendo elemento dal DOM
+const likeButton = document.querySelectorAll('.like-button');
+
+// Cambio colore del bottone
+likeButton.forEach ((button,i) => button.addEventListener('click', () =>{
+    const likeCounter = document.getElementById(`like-counter-${i+1}`);
+    isClicked = !isClicked;
+    let changeLike = posts[i].likes;
+    if(isClicked){
+        button.classList.add('like-button--liked');
+        changeLike++;
+    }
+    else{
+        button.classList.remove('like-button--liked'); 
+        changeLike[i];  
+    }
+    likeCounter.innerText = changeLike;
+    return;
+}));
